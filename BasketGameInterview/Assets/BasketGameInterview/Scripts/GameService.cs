@@ -9,6 +9,10 @@ public enum GameState
 
 public class GameService : MonoBehaviour
 {
+    public GameObject BasketBall;
+
+
+
     private GameState _currentGameState;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
