@@ -9,16 +9,30 @@ public enum GameState
 
 public class GameService : MonoBehaviour
 {
-    public GameObject BasketBall;
+    public GameObject ShootBasketBallStartPosition;
+    public GameObject BasketBallPrefab;
 
-
+    private GameObject _currentBasketBall;
 
     private GameState _currentGameState;
+
+    private void _triggerNewBall()
+    {
+        _currentBasketBall = GameObject.Instantiate(BasketBallPrefab);
+        _currentBasketBall.transform.position = ShootBasketBallStartPosition.transform.position;
+    }
+
+    private void _shootBall(Vector2 direction)
+    {
+        var disappearAfterDelay = _currentBasketBall.GetComponent<DisappearAfterDelay>();
+
+        disappearAfterDelay.TriggerDisappear();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _currentGameState = GameState.Menu;    
+        _currentGameState = GameState.Menu;
     }
 
     private void _handleMenuInputs()
