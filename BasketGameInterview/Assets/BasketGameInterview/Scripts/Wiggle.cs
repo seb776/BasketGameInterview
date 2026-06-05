@@ -39,12 +39,12 @@ public class Wiggle : MonoBehaviour
             float decay = Mathf.Exp(-TILT_DAMPING * t);
             float tilt = Mathf.Sin(t * Mathf.PI * TILT_FREQUENCY) * TILT_AMOUNT * decay;
 
-            transform.localPosition = _startPos + Vector3.up * (wave * MOVE_AMOUNT);
+            //transform.localPosition = _startPos + Vector3.up * (wave * MOVE_AMOUNT);
             transform.localRotation = _startRot * Quaternion.Euler(0f, 0f, tilt);
 
             if (_wiggleTime >= WIGGLE_DURATION)
             {
-                transform.localPosition = _startPos;
+                //transform.localPosition = _startPos;
                 transform.localRotation = _startRot;
                 _isWiggling = false;
                 _timer = 0f;
