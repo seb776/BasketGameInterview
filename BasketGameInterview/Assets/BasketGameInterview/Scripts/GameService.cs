@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +25,7 @@ public class GameService : MonoBehaviour
     public TextMeshPro ScoreText;
     public GameObject BasketRim;
     public BoxCollider BasketRimPositionArea;
+    public EnteredRimDetector EnteredRimDetector;
 
     private GameObject _currentBasketBall;
     private GameState _currentGameState;
@@ -35,8 +39,8 @@ public class GameService : MonoBehaviour
 
     private void MoveBasketRim()
     {
-        var newX = Random.Range(BasketRimPositionArea.bounds.min.x, BasketRimPositionArea.bounds.max.x);
-        var newZ = Random.Range(BasketRimPositionArea.bounds.min.z, BasketRimPositionArea.bounds.max.z);
+        var newX = UnityEngine.Random.Range(BasketRimPositionArea.bounds.min.x, BasketRimPositionArea.bounds.max.x);
+        var newZ = UnityEngine.Random.Range(BasketRimPositionArea.bounds.min.z, BasketRimPositionArea.bounds.max.z);
         BasketRim.transform.position = new Vector3(newX, 0.0f, newZ);
     }
 
@@ -50,7 +54,16 @@ public class GameService : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        EnteredRimDetector.OnBallScored += EnteredRimDetector_OnBallScored;
         _currentGameState = GameState.Menu;
+    }
+
+    private void EnteredRimDetector_OnBallScored(float distance)
+    {
+        var scoresToDistance = new List<Tuple<float, int>>();
+        var foundScore = scoresToDistance.Last(el => el.Item1 < distance);
+        _currentScore += foundScore.Item2;
+        // TODO trigger sound and anim
     }
 
     private void _startGame()
