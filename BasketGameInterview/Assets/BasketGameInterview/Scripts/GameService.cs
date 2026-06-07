@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -23,14 +24,18 @@ public class GameService : MonoBehaviour
     public GameObject ShootBasketBallStartPosition;
     public GameObject BasketBallPrefab;
     public TextMeshPro ScoreText;
+    public TextMeshPro TimerText;
     public GameObject BasketRim;
     public BoxCollider BasketRimPositionArea;
     public EnteredRimDetector EnteredRimDetector;
+    public Text EndUIScore;
 
     private GameObject _currentBasketBall;
     private GameState _currentGameState;
     private int _currentScore;
     public RectTransform LineShootBall;
+
+    private UIService _uiSvc => GameSingleton.Instance.UIService;
     private void _triggerNewBall()
     {
         _currentBasketBall = GameObject.Instantiate(BasketBallPrefab);
@@ -71,7 +76,9 @@ public class GameService : MonoBehaviour
         _currentGameState= GameState.InGame;
         _currentScore = 0;
         _triggerNewBall();
+        _time = 60.0f;
     }
+    private float _time;
 
     private void _handleMenuInputs()
     {
@@ -87,6 +94,7 @@ public class GameService : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             _currentGameState = GameState.InGame;
+            _startGame();
         }
     }
 
@@ -102,26 +110,45 @@ public class GameService : MonoBehaviour
             _handleEndScreenInputs();
         }
         ScoreText.text = _currentScore.ToString("D4"); // Padded to be length 4
+        TimerText.text = TimeSpan.FromSeconds(_time).ToString(@"m\:ss");
         if (_currentBasketBall != null)
         {
             Vector2 screenPos = Camera.main.WorldToScreenPoint(_currentBasketBall.transform.position);
             GameSingleton.Instance.UIService.DrawUILine(LineShootBall, screenPos, Input.mousePosition);
         }
+        if (_currentGameState == GameState.InGame)
+        {
+            if (_time < 0.0f)
+            {
+                EndUIScore.text = ScoreText.text;
+                _currentGameState = GameState.EndScreen;
+            }
+            _time -= Time.deltaTime;
+        }
+
+        if (_currentGameState == GameState.InGame)
+        {
+            _uiSvc.ShowGameUI();
+        }
+        if (_currentGameState != GameState.InGame)
+        {
+            _uiSvc.HideGameUI();
+        }
         if (_currentGameState == GameState.Menu)
         {
-            GameSingleton.Instance.UIService.ShowMenu();
+            _uiSvc.ShowMenuUI();
         }
         if (_currentGameState != GameState.Menu)
         {
-            GameSingleton.Instance.UIService.HideMenu();
+            _uiSvc.HideMenuUI();
         }
         if (_currentGameState == GameState.EndScreen)
         {
-            GameSingleton.Instance.UIService.ShowEndScreen();
+            _uiSvc.ShowEndUI();
         }
         if (_currentGameState != GameState.EndScreen)
         {
-            GameSingleton.Instance.UIService.HideEndScreen();
+            _uiSvc.HideEndUI();
         }
 
     }
