@@ -11,5 +11,6 @@ public class DisappearAfterDelay : MonoBehaviour
     private IEnumerator _triggerDisappearCorout()
     {
         yield return new WaitForSeconds(DefaultDisappearDelay);
+        Destroy(gameObject);
     }
 }

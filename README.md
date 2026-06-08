@@ -19,8 +19,6 @@ Drag under the ball to "calibrate" direction and strength then release to shoot.
 # Credits
 
 Sport Rock Stinger by SergeQuadrado -- https://freesound.org/s/701150/ -- License: Attribution NonCommercial 4.0
-https://www.flaticon.com/free-icon-font/volume-mute_10436118
-https://www.flaticon.com/free-icon-font/volume_3917601
 "Basket Rim" (https://skfb.ly/oQ7JD) by Saiforis is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 "Basket Ball" (https://skfb.ly/oOrWo) by Criistinaa is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 Nova Hoops Full Thick Punchy Basketball Basket Ball Dribble Hooping  Flanger Mono 3 - Nova Sound by NovaSoundTechnology -- https://freesound.org/s/808718/ -- License: Attribution 4.0
